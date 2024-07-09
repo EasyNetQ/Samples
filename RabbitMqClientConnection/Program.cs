@@ -9,7 +9,7 @@ namespace RabbitMqClientConnection
             var timeout = TimeSpan.FromSeconds(72);
             // var connectionFactory = new ConnectionFactory
             // {
-            //     HostName = "localhost",
+            //     HostName = "rabbitmq",
             //     ContinuationTimeout = timeout,
             //     HandshakeContinuationTimeout = timeout,
             //     RequestedConnectionTimeout = timeout,
@@ -18,7 +18,7 @@ namespace RabbitMqClientConnection
             // };
             var connectionFactory = new ConnectionFactory
             {
-                Uri = new Uri(@"amqp://localhost/?connection_timeout=72000")
+                Uri = new Uri(@"amqp://rabbitmq/?connection_timeout=72000")
             };
 
             using var connection = connectionFactory.CreateConnection();

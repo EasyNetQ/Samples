@@ -12,7 +12,7 @@ namespace MultiBindingTestConsumer
             Console.WriteLine("Starting Consumer...");
 
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddEasyNetQ("host=localhost").UseSystemTextJson();
+            serviceCollection.AddEasyNetQ("host=rabbitmq").UseSystemTextJson();
 
             using var provider = serviceCollection.BuildServiceProvider();
             var bus = provider.GetRequiredService<IBus>();

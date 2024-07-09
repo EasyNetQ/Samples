@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - easynetq_network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  publisher:
+    build:
+      context: .
+      dockerfile: Publisher/Dockerfile
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+    depends_on:
+      - rabbitmq
+      # rabbitmq:
+        # condition: service_healthy
+    stdin_open: true
+    tty: true
+    networks:
+      - easynetq_network
+
+  subscriber:
+    build:
+      context: .
+      dockerfile: Subscriber/Dockerfile
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    networks:
+      - easynetq_network
+
+networks:
+  easynetq_network:
+    name: easynetqtest_easynetq_network
+    driver: bridge
+    external: true
