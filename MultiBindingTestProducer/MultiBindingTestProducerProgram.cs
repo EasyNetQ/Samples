@@ -10,8 +10,14 @@ namespace MultiBindingTestProducer
             Console.WriteLine("Starting Producer...");
 
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddEasyNetQ("host=rabbitmq").UseSystemTextJson();
 
+            var rabbitMqHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
+            var rabbitMqUser = Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? "guest";
+            var rabbitMqPass = Environment.GetEnvironmentVariable("RABBITMQ_PASS") ?? "guest";
+            var connectionString = $"host={rabbitMqHost};username={rabbitMqUser};password={rabbitMqPass}";
+
+            serviceCollection.AddEasyNetQ(connectionString).UseSystemTextJson();
+            
             using var provider = serviceCollection.BuildServiceProvider();
             var bus = provider.GetRequiredService<IBus>();
             var advancedBus = bus.Advanced;

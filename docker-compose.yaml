@@ -28,8 +28,6 @@ services:
       RABBITMQ_PASS: guest
     depends_on:
       - rabbitmq
-      # rabbitmq:
-        # condition: service_healthy
     stdin_open: true
     tty: true
     networks:
