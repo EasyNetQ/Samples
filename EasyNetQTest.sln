@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiBindingTestProducer", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqClientConnection", "RabbitMqClientConnection\RabbitMqClientConnection.csproj", "{58A727E7-4C66-4650-997A-D00599F14476}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomLogger", "CustomLogger\CustomLogger.csproj", "{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{58A727E7-4C66-4650-997A-D00599F14476}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58A727E7-4C66-4650-997A-D00599F14476}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58A727E7-4C66-4650-997A-D00599F14476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

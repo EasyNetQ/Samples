@@ -4,13 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 var serviceCollection = new ServiceCollection();
+serviceCollection.AddLogging(builder => builder
+    .ClearProviders()
+    .AddProvider(new CustomConsoleLoggerProvider()));
 
 var rabbitMqHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
 var rabbitMqUser = Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? "guest";
 var rabbitMqPass = Environment.GetEnvironmentVariable("RABBITMQ_PASS") ?? "guest";
 var connectionString = $"host={rabbitMqHost};username={rabbitMqUser};password={rabbitMqPass}";
 
-serviceCollection.AddLogging(builder => builder.AddConsole());
 serviceCollection.AddEasyNetQ(connectionString).UseSystemTextJson();
 using var provider = serviceCollection.BuildServiceProvider();
 
