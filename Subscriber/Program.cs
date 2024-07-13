@@ -1,6 +1,7 @@
 ﻿using EasyNetQ;
 using Messages;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 var serviceCollection = new ServiceCollection();
 
@@ -9,18 +10,26 @@ var rabbitMqUser = Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? "guest
 var rabbitMqPass = Environment.GetEnvironmentVariable("RABBITMQ_PASS") ?? "guest";
 var connectionString = $"host={rabbitMqHost};username={rabbitMqUser};password={rabbitMqPass}";
 
+serviceCollection.AddLogging(builder => builder.AddConsole());
 serviceCollection.AddEasyNetQ(connectionString).UseSystemTextJson();
-
 using var provider = serviceCollection.BuildServiceProvider();
-var bus = provider.GetRequiredService<IBus>();
+
+var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
+var logger = loggerFactory.CreateLogger<Program>();
+
+logger.LogInformation("Starting subscriber application.");
+
+IBus bus = provider.GetRequiredService<IBus>();
+
 
 bus.PubSub.Subscribe<TextMessage>("test", HandleTextMessage);
-Console.WriteLine("Listening for messages. Hit <return> to quit.");
+logger.LogInformation("Listening for messages. Hit <return> to quit.");
 Console.ReadLine();
+
+
+logger.LogInformation("Subscriber application stopped.");
 
 void HandleTextMessage(TextMessage textMessage)
 {
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine("Got message: {0}", textMessage.Text);
-    Console.ResetColor();
+    logger.LogInformation("Got message: {0}", textMessage.Text);
 }
