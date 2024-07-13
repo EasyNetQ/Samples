@@ -1,30 +1,21 @@
 ﻿using RabbitMQ.Client;
 
-namespace RabbitMqClientConnection
+var timeout = TimeSpan.FromSeconds(72);
+// var connectionFactory = new ConnectionFactory
+// {
+//     HostName = "rabbitmq",
+//     ContinuationTimeout = timeout,
+//     HandshakeContinuationTimeout = timeout,
+//     RequestedConnectionTimeout = timeout,
+//     SocketReadTimeout = timeout,
+//     SocketWriteTimeout = timeout
+// };
+var connectionFactory = new ConnectionFactory
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var timeout = TimeSpan.FromSeconds(72);
-            // var connectionFactory = new ConnectionFactory
-            // {
-            //     HostName = "rabbitmq",
-            //     ContinuationTimeout = timeout,
-            //     HandshakeContinuationTimeout = timeout,
-            //     RequestedConnectionTimeout = timeout,
-            //     SocketReadTimeout = timeout,
-            //     SocketWriteTimeout = timeout
-            // };
-            var connectionFactory = new ConnectionFactory
-            {
-                Uri = new Uri(@"amqp://rabbitmq/?connection_timeout=72000")
-            };
+    Uri = new Uri(@"amqp://rabbitmq/?connection_timeout=72000")
+};
 
-            using var connection = connectionFactory.CreateConnection();
+using var connection = connectionFactory.CreateConnection();
 
-            Console.WriteLine("connected! Hit return to end.");
-            Console.ReadLine();
-        }
-    }
-}
+Console.WriteLine("connected! Hit return to end.");
+Console.ReadLine();
