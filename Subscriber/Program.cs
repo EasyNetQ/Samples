@@ -23,7 +23,7 @@ logger.LogInformation("Starting subscriber application.");
 
 IBus bus = provider.GetRequiredService<IBus>();
 
-bus.PubSub.Subscribe<TextMessage>("test", HandleTextMessage);
+await bus.PubSub.SubscribeAsync<TextMessage>("test", HandleTextMessage);
 logger.LogInformation("Listening for messages. Hit <return> to quit.");
 Console.ReadLine();
 

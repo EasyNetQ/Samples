@@ -31,8 +31,8 @@ for (var i1 = 0; i1 < 10; i1++)
     }
 }
 
-void Publish(string routingKey) =>
-bus.PubSub.Publish(new Messages.TextMessage
+async void Publish(string routingKey) =>
+await bus.PubSub.PublishAsync(new Messages.TextMessage
 {
     Text = routingKey
 }, configuration => configuration.WithTopic(routingKey));
