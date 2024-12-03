@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqClientConnection", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomLogger", "CustomLogger\CustomLogger.csproj", "{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQTest.AppHost", "EasyNetQTest.AppHost\EasyNetQTest.AppHost.csproj", "{A7B47934-7FB0-4D05-806F-BB055808CFEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQTest.ServiceDefaults", "EasyNetQTest.ServiceDefaults\EasyNetQTest.ServiceDefaults.csproj", "{267A61E4-4F10-4F03-945F-E7D2BEB93AF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7B47934-7FB0-4D05-806F-BB055808CFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7B47934-7FB0-4D05-806F-BB055808CFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7B47934-7FB0-4D05-806F-BB055808CFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7B47934-7FB0-4D05-806F-BB055808CFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{267A61E4-4F10-4F03-945F-E7D2BEB93AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{267A61E4-4F10-4F03-945F-E7D2BEB93AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{267A61E4-4F10-4F03-945F-E7D2BEB93AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{267A61E4-4F10-4F03-945F-E7D2BEB93AF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
