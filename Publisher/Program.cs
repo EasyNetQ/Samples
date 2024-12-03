@@ -1,22 +1,28 @@
 ﻿using EasyNetQ;
 using EasyNetQTest.ServiceDefaults;
 using Messages;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 var builder = Host.CreateApplicationBuilder(args);
 
+var configuration = builder.Configuration;
+
 // Add Aspire's service defaults
 builder.AddServiceDefaults();
 
-// Configure RabbitMQ connection
-var rabbitMqHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
-var rabbitMqUser = Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? "guest";
-var rabbitMqPass = Environment.GetEnvironmentVariable("RABBITMQ_PASS") ?? "guest";
-var connectionString = $"host={rabbitMqHost};username={rabbitMqUser};password={rabbitMqPass}";
+builder.AddRabbitMQClient(
+    "messaging",
+    static settings => settings.DisableHealthChecks = true);
 
 // Add EasyNetQ with System.Text.Json serialization
+var connectionString = configuration.GetValue<string>("Aspire:RabbitMQ:Client:ConnectionString");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("RabbitMQ connection string is not configured.");
+}
 builder.Services.AddEasyNetQ(connectionString).UseSystemTextJson();
 
 // Configure custom logging
@@ -29,6 +35,8 @@ var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 logger.LogInformation("Starting publisher application...");
+
+await app.RunAsync();
 
 // Get the EasyNetQ bus
 var bus = app.Services.GetRequiredService<IBus>();

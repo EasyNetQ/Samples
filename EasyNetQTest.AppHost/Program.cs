@@ -1,6 +1,12 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddProject<Projects.Publisher>("publisher");
-builder.AddProject<Projects.Subscriber>("subscriber");
+var rabbitmq = builder
+    .AddRabbitMQ("messaging")
+    .WithManagementPlugin();
 
-builder.Build().Run();
+builder.AddProject<Projects.Publisher>("publisher")
+    .WithReference(rabbitmq);
+builder.AddProject<Projects.Subscriber>("subscriber")
+    .WithReference(rabbitmq);
+
+await builder.Build().RunAsync();
