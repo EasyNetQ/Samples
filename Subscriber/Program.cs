@@ -10,11 +10,18 @@ var builder = Host.CreateApplicationBuilder(args);
 var configuration = builder.Configuration;
 builder.AddServiceDefaults();
 
+string connectionString = null;
+
 builder.AddRabbitMQClient(
     "messaging",
-    static settings => settings.DisableHealthChecks = true);
+    settings =>
+    {
+        settings.DisableHealthChecks = true;
+        connectionString = settings.ConnectionString;
+    }
+    );
 
-var connectionString = configuration.GetValue<string>("Aspire:RabbitMQ:Client:ConnectionString");
+// var connectionString = configuration.GetValue<string>("Aspire:RabbitMQ:Client:ConnectionString");
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new InvalidOperationException("RabbitMQ connection string is not configured.");
