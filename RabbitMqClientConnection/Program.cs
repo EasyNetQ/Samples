@@ -15,7 +15,7 @@ var connectionFactory = new ConnectionFactory
     Uri = new Uri(@"amqp://rabbitmq/?connection_timeout=72000")
 };
 
-using var connection = connectionFactory.CreateConnection();
+using var connection = connectionFactory.CreateConnectionAsync();
 
 Console.WriteLine("connected! Hit return to end.");
 Console.ReadLine();

@@ -9,14 +9,15 @@
 
 <ItemGroup>
     <PackageReference Include="Aspire.RabbitMQ.Client" Version="9.0.0" />
-    <PackageReference Include="EasyNetQ" Version="8.0.0-beta98" />
-    <PackageReference Include="EasyNetQ.Serialization.SystemTextJson" Version="8.0.0-beta98" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\EasyNetQ\Source\EasyNetQ.Serialization.SystemTextJson\EasyNetQ.Serialization.SystemTextJson.csproj" />
+    <ProjectReference Include="..\..\EasyNetQ\Source\EasyNetQ\EasyNetQ.csproj" />
     <ProjectReference Include="..\Messages\Messages.csproj" />
     <ProjectReference Include="..\CustomLogger\CustomLogger.csproj" />
     <ProjectReference Include="..\EasyNetQTest.ServiceDefaults\EasyNetQTest.ServiceDefaults.csproj" />

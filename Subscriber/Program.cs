@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Subscriber;
 
 var builder = Host.CreateApplicationBuilder(args);
 var configuration = builder.Configuration;
@@ -31,20 +32,8 @@ builder.Services.AddLogging(loggingBuilder => loggingBuilder
     .ClearProviders()
     .AddProvider(new CustomConsoleLoggerProvider()));
 
+builder.Services.AddHostedService<EasyNetQHostedService>();
+
 var app = builder.Build();
-
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-logger.LogInformation("Starting subscriber application.");
-
-var bus = app.Services.GetRequiredService<IBus>();
-
-await bus.PubSub.SubscribeAsync<TextMessage>("test", HandleTextMessage);
-logger.LogInformation("Listening for messages. Hit <return> to quit.");
-logger.LogInformation("Subscriber application stopped.");
-
-void HandleTextMessage(TextMessage textMessage)
-{
-    logger.LogInformation("Got message: {0}", textMessage.Text);
-}
 
 await app.RunAsync();

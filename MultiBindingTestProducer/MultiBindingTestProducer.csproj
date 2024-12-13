@@ -8,13 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EasyNetQ" Version="8.0.0-beta98" />
-    <PackageReference Include="EasyNetQ.Serialization.SystemTextJson" Version="8.0.0-beta98" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Messages\Messages.csproj" />
+    <ProjectReference Include="..\..\EasyNetQ\Source\EasyNetQ.Serialization.SystemTextJson\EasyNetQ.Serialization.SystemTextJson.csproj" />
+    <ProjectReference Include="..\..\EasyNetQ\Source\EasyNetQ\EasyNetQ.csproj" />
   </ItemGroup>
 
 </Project>

@@ -21,7 +21,7 @@ builder.AddRabbitMQClient(
         settings.DisableHealthChecks = true;
         connectionString = settings.ConnectionString;
     }
-    );
+);
 
 // var connectionString = configuration.GetValue<string>("Aspire:RabbitMQ:Client:ConnectionString");
 if (string.IsNullOrEmpty(connectionString))
@@ -34,22 +34,15 @@ builder.Services.AddLogging(loggingBuilder => loggingBuilder
     .ClearProviders()
     .AddConsole());
 
+builder.Services.AddSingleton(
+        new HostOptions {
+            ServicesStartConcurrently = true,
+            ServicesStopConcurrently = true,
+            BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.StopHost
+        }
+    );
+builder.Services.AddHostedService<EasyNetQHostedService>();
+
 var app = builder.Build();
-
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-logger.LogInformation("Starting publisher application...");
-
-
-var bus = app.Services.GetRequiredService<IBus>();
-
-var input = string.Empty;
-logger.LogInformation("Enter a message. 'Quit' to quit.");
-while ((input = Console.ReadLine()) != "Quit")
-{
-    await bus.PubSub.PublishAsync(new TextMessage { Text = input });
-    logger.LogInformation("Message published!");
-}
-
-logger.LogInformation("Publisher application stopped.");
 
 await app.RunAsync();
