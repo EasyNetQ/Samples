@@ -1,48 +1,66 @@
-﻿using EasyNetQ;
+using EasyNetQ;
 using EasyNetQTest.ServiceDefaults;
 using Messages;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-var builder = Host.CreateApplicationBuilder(args);
-
-var configuration = builder.Configuration;
+var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.Services.AddProblemDetails();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-string connectionString = null;
+string connectionString = string.Empty;
 
 builder.AddRabbitMQClient(
     "messaging",
     settings =>
     {
         settings.DisableHealthChecks = true;
-        connectionString = settings.ConnectionString;
+        connectionString = settings.ConnectionString ?? string.Empty;
     }
 );
 
-// var connectionString = configuration.GetValue<string>("Aspire:RabbitMQ:Client:ConnectionString");
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new InvalidOperationException("RabbitMQ connection string is not configured.");
 }
+
 builder.Services.AddEasyNetQ(connectionString).UseSystemTextJson();
 
 builder.Services.AddLogging(loggingBuilder => loggingBuilder
     .ClearProviders()
-    .AddConsole());
+    .AddProvider(new CustomConsoleLoggerProvider()));
 
-builder.Services.AddSingleton(
-        new HostOptions {
-            ServicesStartConcurrently = true,
-            ServicesStopConcurrently = true,
-            BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.StopHost
-        }
-    );
-builder.Services.AddHostedService<EasyNetQHostedService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
-await app.RunAsync();
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseCors("AllowAll");
+
+app.UseHttpsRedirection();
+
+app.MapPost("/publish", async (IBus bus, string message, ILogger<Program> logger) =>
+{
+    if (string.IsNullOrWhiteSpace(message))
+    {
+        return Results.BadRequest("Message cannot be empty.");
+    }
+
+    await bus.PubSub.PublishAsync(new TextMessage { Text = message });
+    logger.LogInformation("Message published: {Message}", message);
+    return Results.Ok("Message published successfully.");
+})
+.WithName("PublishMessage");
+
+app.Run();
