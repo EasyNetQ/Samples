@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messages", "Messages\Messag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subscriber", "Subscriber\Subscriber.csproj", "{333D15C8-7077-4FA9-AB33-414A71E56B8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomLogger", "CustomLogger\CustomLogger.csproj", "{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQSample.AppHost", "EasyNetQSample.AppHost\EasyNetQSample.AppHost.csproj", "{A7B47934-7FB0-4D05-806F-BB055808CFEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQSample.ServiceDefaults", "EasyNetQSample.ServiceDefaults\EasyNetQSample.ServiceDefaults.csproj", "{267A61E4-4F10-4F03-945F-E7D2BEB93AF2}"
@@ -33,10 +31,6 @@ Global
 		{333D15C8-7077-4FA9-AB33-414A71E56B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{333D15C8-7077-4FA9-AB33-414A71E56B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{333D15C8-7077-4FA9-AB33-414A71E56B8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A7B47934-7FB0-4D05-806F-BB055808CFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A7B47934-7FB0-4D05-806F-BB055808CFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7B47934-7FB0-4D05-806F-BB055808CFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU

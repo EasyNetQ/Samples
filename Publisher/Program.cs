@@ -1,4 +1,3 @@
-using CustomLogger;
 using EasyNetQ;
 using EasyNetQSample.ServiceDefaults;
 using Messages;
@@ -30,7 +29,8 @@ builder.Services.AddEasyNetQ(connectionString).UseSystemTextJson();
 
 builder.Services.AddLogging(loggingBuilder => loggingBuilder
     .ClearProviders()
-    .AddProvider(new CustomConsoleLoggerProvider()));
+    .AddConsole()
+    .AddOpenTelemetry(logging => { logging.IncludeFormattedMessage = true; }));
 
 builder.Services.AddCors(options =>
 {

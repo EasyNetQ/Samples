@@ -1,5 +1,4 @@
-﻿using CustomLogger;
-using EasyNetQ;
+﻿using EasyNetQ;
 using EasyNetQSample.ServiceDefaults;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,7 +27,8 @@ if (string.IsNullOrEmpty(connectionString))
 builder.Services.AddEasyNetQ(connectionString).UseSystemTextJson();
 builder.Services.AddLogging(loggingBuilder => loggingBuilder
     .ClearProviders()
-    .AddProvider(new CustomConsoleLoggerProvider()));
+    .AddConsole()
+    .AddOpenTelemetry(logging => { logging.IncludeFormattedMessage = true; }));
 
 builder.Services.AddHostedService<EasyNetQHostedService>();
 
