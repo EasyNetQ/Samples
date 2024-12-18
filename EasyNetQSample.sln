@@ -7,17 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messages", "Messages\Messag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subscriber", "Subscriber\Subscriber.csproj", "{333D15C8-7077-4FA9-AB33-414A71E56B8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiBindingTestConsumer", "MultiBindingTestConsumer\MultiBindingTestConsumer.csproj", "{454F56D9-2802-4844-93A5-C0317A48E729}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiBindingTestProducer", "MultiBindingTestProducer\MultiBindingTestProducer.csproj", "{E67BBABF-4E38-4DC2-8161-6319CE2C8058}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqClientConnection", "RabbitMqClientConnection\RabbitMqClientConnection.csproj", "{58A727E7-4C66-4650-997A-D00599F14476}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomLogger", "CustomLogger\CustomLogger.csproj", "{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQTest.AppHost", "EasyNetQTest.AppHost\EasyNetQTest.AppHost.csproj", "{A7B47934-7FB0-4D05-806F-BB055808CFEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQSample.AppHost", "EasyNetQSample.AppHost\EasyNetQSample.AppHost.csproj", "{A7B47934-7FB0-4D05-806F-BB055808CFEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQTest.ServiceDefaults", "EasyNetQTest.ServiceDefaults\EasyNetQTest.ServiceDefaults.csproj", "{267A61E4-4F10-4F03-945F-E7D2BEB93AF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQSample.ServiceDefaults", "EasyNetQSample.ServiceDefaults\EasyNetQSample.ServiceDefaults.csproj", "{267A61E4-4F10-4F03-945F-E7D2BEB93AF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQ", "..\EasyNetQ\Source\EasyNetQ\EasyNetQ.csproj", "{1640C0A2-870D-41F6-BBA4-606D51515957}"
 EndProject
@@ -39,18 +33,6 @@ Global
 		{333D15C8-7077-4FA9-AB33-414A71E56B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{333D15C8-7077-4FA9-AB33-414A71E56B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{333D15C8-7077-4FA9-AB33-414A71E56B8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{454F56D9-2802-4844-93A5-C0317A48E729}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{454F56D9-2802-4844-93A5-C0317A48E729}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{454F56D9-2802-4844-93A5-C0317A48E729}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{454F56D9-2802-4844-93A5-C0317A48E729}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E67BBABF-4E38-4DC2-8161-6319CE2C8058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E67BBABF-4E38-4DC2-8161-6319CE2C8058}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E67BBABF-4E38-4DC2-8161-6319CE2C8058}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E67BBABF-4E38-4DC2-8161-6319CE2C8058}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58A727E7-4C66-4650-997A-D00599F14476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58A727E7-4C66-4650-997A-D00599F14476}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58A727E7-4C66-4650-997A-D00599F14476}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58A727E7-4C66-4650-997A-D00599F14476}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E5CA2BF-B9BF-4802-8D5B-A18A14B22BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU

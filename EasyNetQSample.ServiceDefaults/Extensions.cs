@@ -9,13 +9,21 @@ using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
-namespace EasyNetQTest.ServiceDefaults;
+namespace EasyNetQSample.ServiceDefaults;
 
 // Adds common .NET Aspire services: service discovery, resilience, health checks, and OpenTelemetry.
 // This project should be referenced by each service project in your solution.
 // To learn more about using this project, see https://aka.ms/dotnet/aspire/service-defaults
+/// <summary>
+/// Provides extension methods for adding common .NET Aspire services.
+/// </summary>
 public static class Extensions
 {
+    /// <summary>
+    /// Adds common .NET Aspire services to the application builder.
+    /// </summary>
+    /// <param name="builder">The host application builder.</param>
+    /// <returns>The updated host application builder.</returns>
     public static IHostApplicationBuilder AddServiceDefaults(this IHostApplicationBuilder builder)
     {
         builder.ConfigureOpenTelemetry();
@@ -42,6 +50,11 @@ public static class Extensions
         return builder;
     }
 
+    /// <summary>
+    /// Configures OpenTelemetry for the application.
+    /// </summary>
+    /// <param name="builder">The host application builder.</param>
+    /// <returns>The updated host application builder.</returns>
     public static IHostApplicationBuilder ConfigureOpenTelemetry(this IHostApplicationBuilder builder)
     {
         builder.Logging.AddOpenTelemetry(logging =>
@@ -89,6 +102,11 @@ public static class Extensions
         return builder;
     }
 
+    /// <summary>
+    /// Adds default health checks to the application builder.
+    /// </summary>
+    /// <param name="builder">The host application builder.</param>
+    /// <returns>The updated host application builder.</returns>
     public static IHostApplicationBuilder AddDefaultHealthChecks(this IHostApplicationBuilder builder)
     {
         builder.Services.AddHealthChecks()
@@ -98,6 +116,11 @@ public static class Extensions
         return builder;
     }
 
+    /// <summary>
+    /// Maps default endpoints for the application.
+    /// </summary>
+    /// <param name="app">The web application.</param>
+    /// <returns>The updated web application.</returns>
     public static WebApplication MapDefaultEndpoints(this WebApplication app)
     {
         // Adding health checks endpoints to applications in non-development environments has security implications.

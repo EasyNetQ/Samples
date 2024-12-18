@@ -1,11 +1,12 @@
 ﻿namespace Messages;
 
+/// <summary>
+/// Represents a text message.
+/// </summary>
 public class TextMessage
 {
-    public string Text { get; set; }
-}
-
-public static class Constants
-{
-    public const string MultiBindingExchange = "multi.binding";
+    /// <summary>
+    /// Gets or sets the text of the message.
+    /// </summary>
+    public string Text { get; set; } = string.Empty;
 }

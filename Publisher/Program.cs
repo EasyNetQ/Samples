@@ -1,5 +1,6 @@
+using CustomLogger;
 using EasyNetQ;
-using EasyNetQTest.ServiceDefaults;
+using EasyNetQSample.ServiceDefaults;
 using Messages;
 
 var builder = WebApplication.CreateBuilder(args);

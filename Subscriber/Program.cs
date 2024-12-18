@@ -1,7 +1,6 @@
-﻿using EasyNetQ;
-using EasyNetQTest.ServiceDefaults;
-using Messages;
-using Microsoft.Extensions.Configuration;
+﻿using CustomLogger;
+using EasyNetQ;
+using EasyNetQSample.ServiceDefaults;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -11,18 +10,17 @@ var builder = Host.CreateApplicationBuilder(args);
 var configuration = builder.Configuration;
 builder.AddServiceDefaults();
 
-string connectionString = null;
+string connectionString = string.Empty;
 
 builder.AddRabbitMQClient(
     "messaging",
     settings =>
     {
         settings.DisableHealthChecks = true;
-        connectionString = settings.ConnectionString;
+        connectionString = settings.ConnectionString ?? string.Empty;
     }
     );
 
-// var connectionString = configuration.GetValue<string>("Aspire:RabbitMQ:Client:ConnectionString");
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new InvalidOperationException("RabbitMQ connection string is not configured.");
