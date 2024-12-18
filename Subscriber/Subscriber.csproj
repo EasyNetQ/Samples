@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Messages\Messages.csproj" />
-    <ProjectReference Include="..\CustomLogger\CustomLogger.csproj" />
     <ProjectReference Include="..\EasyNetQSample.ServiceDefaults\EasyNetQSample.ServiceDefaults.csproj" />
   </ItemGroup>
 
