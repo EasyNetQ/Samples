@@ -1,4 +1,5 @@
 using EasyNetQ;
+using EasyNetQ.Persistent;
 using EasyNetQSample.ServiceDefaults;
 using Messages;
 
@@ -20,12 +21,13 @@ builder.AddRabbitMQClient(
     }
 );
 
-if (string.IsNullOrEmpty(connectionString))
-{
-    throw new InvalidOperationException("RabbitMQ connection string is not configured.");
-}
 
-builder.Services.AddEasyNetQ(connectionString).UseSystemTextJson();
+builder.Services.AddSingleton( new ConnectionConfiguration {
+        ClientName = "publisher"
+});
+builder.Services.AddEasyNetQ().UseSystemTextJson();
+
+builder.Services.AddHostedService<PublisherHostedService>();
 
 builder.Services.AddLogging(loggingBuilder => loggingBuilder
     .ClearProviders()
@@ -65,3 +67,18 @@ app.MapPost("/publish", async (IBus bus, string message, ILogger<Program> logger
 .WithName("PublishMessage");
 
 app.Run();
+
+public class PublisherHostedService(IBus bus) : IHostedLifecycleService
+{
+    public Task StartAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
+    public async Task StartedAsync(CancellationToken cancellationToken)
+    {
+        await bus.Advanced.EnsureConnectedAsync(PersistentConnectionType.Producer, cancellationToken);
+    }
+
+    public Task StartingAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+    public Task StoppedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+    public Task StoppingAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+}

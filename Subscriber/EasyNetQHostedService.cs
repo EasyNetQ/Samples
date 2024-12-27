@@ -1,4 +1,6 @@
 using EasyNetQ;
+using EasyNetQ.AutoSubscribe;
+using EasyNetQ.Persistent;
 using Messages;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -10,7 +12,7 @@ namespace Subscriber;
 /// </summary>
 /// <param name="bus">The bus instance used for subscribing to messages.</param>
 /// <param name="logger">The logger instance used for logging information.</param>
-public class EasyNetQHostedService(IBus bus, ILogger<EasyNetQHostedService> logger) : IHostedLifecycleService
+public class EasyNetQHostedService(IBus bus, IServiceProvider provider, ILogger<EasyNetQHostedService> logger) : BackgroundService
 {
     private SubscriptionResult _subscriber;
 
@@ -18,75 +20,30 @@ public class EasyNetQHostedService(IBus bus, ILogger<EasyNetQHostedService> logg
     /// Handles the text message.
     /// </summary>
     /// <param name="textMessage">The text message to handle.</param>
-    void HandleTextMessage(TextMessage textMessage)
+    async Task HandleTextMessage(TextMessage textMessage)
     {
         logger.LogInformation("Got message: {0}", textMessage.Text);
     }
 
-    /// <summary>
-    /// Starts the subscriber application.
-    /// </summary>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A task that represents the asynchronous start operation.</returns>
-    public async Task StartAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         logger.LogInformation("Starting subscriber application.");
-        _subscriber = await bus.PubSub.SubscribeAsync<TextMessage>("test", HandleTextMessage, cancellationToken: cancellationToken);
+
+        var subscriber = new AutoSubscriber(bus, provider, "test");
+
+        await subscriber.SubscribeAsync([typeof(TestConsumer)], stoppingToken);
+        //_subscriber = bus.PubSub.Subscribe<TextMessage>("test", HandleTextMessage, cancellationToken: stoppingToken);
+
+        await bus.Advanced.EnsureConnectedAsync(PersistentConnectionType.Consumer, stoppingToken);
     }
 
-    /// <summary>
-    /// Stops the subscriber application.
-    /// </summary>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A task that represents the asynchronous stop operation.</returns>
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        logger.LogInformation("Subscriber application stop.");
-        _subscriber.Dispose();
-        return Task.CompletedTask;
-    }
 
-    /// <summary>
-    /// Handles the application started event.
-    /// </summary>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A task that represents the asynchronous started operation.</returns>
-    public Task StartedAsync(CancellationToken cancellationToken)
-    {
-        logger.LogInformation("Subscriber application started");
-        return Task.CompletedTask;
-    }
+}
 
-    /// <summary>
-    /// Handles the application starting event.
-    /// </summary>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A task that represents the asynchronous starting operation.</returns>
-    public Task StartingAsync(CancellationToken cancellationToken)
+public class TestConsumer(ILogger<TestConsumer> logger) : IConsume<TextMessage>
+{
+    public void Consume(TextMessage message, CancellationToken cancellationToken = default)
     {
-        logger.LogInformation("Subscriber application starting");
-        return Task.CompletedTask;
-    }
-
-    /// <summary>
-    /// Handles the application stopped event.
-    /// </summary>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A task that represents the asynchronous stopped operation.</returns>
-    public Task StoppedAsync(CancellationToken cancellationToken)
-    {
-        logger.LogInformation("Subscriber application stopped");
-        return Task.CompletedTask;
-    }
-
-    /// <summary>
-    /// Handles the application stopping event.
-    /// </summary>
-    /// <param name="cancellationToken">The cancellation token.</param>
-    /// <returns>A task that represents the asynchronous stopping operation.</returns>
-    public Task StoppingAsync(CancellationToken cancellationToken)
-    {
-        logger.LogInformation("Subscriber application stopping");
-        return Task.CompletedTask;
+        logger.LogInformation("Got message: {0}", message.Text);
     }
 }

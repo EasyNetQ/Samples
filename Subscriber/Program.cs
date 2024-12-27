@@ -1,5 +1,7 @@
 ﻿using EasyNetQ;
+using EasyNetQ.Persistent;
 using EasyNetQSample.ServiceDefaults;
+using Messages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -11,6 +13,10 @@ builder.AddServiceDefaults();
 
 string connectionString = string.Empty;
 
+builder.Services.AddSingleton(new HostOptions {
+    ServicesStartConcurrently = true,
+    ServicesStopConcurrently = false,
+});
 builder.AddRabbitMQClient(
     "messaging",
     settings =>
@@ -19,12 +25,10 @@ builder.AddRabbitMQClient(
         connectionString = settings.ConnectionString ?? string.Empty;
     }
     );
-
-if (string.IsNullOrEmpty(connectionString))
-{
-    throw new InvalidOperationException("RabbitMQ connection string is not configured.");
-}
-builder.Services.AddEasyNetQ(connectionString).UseSystemTextJson();
+builder.Services.AddSingleton( new ConnectionConfiguration {
+    ClientName = "subscriber"
+});
+builder.Services.AddEasyNetQ().UseSystemTextJson();
 builder.Services.AddLogging(loggingBuilder => loggingBuilder
     .ClearProviders()
     .AddConsole()
@@ -35,3 +39,5 @@ builder.Services.AddHostedService<EasyNetQHostedService>();
 var app = builder.Build();
 
 await app.RunAsync();
+
+
